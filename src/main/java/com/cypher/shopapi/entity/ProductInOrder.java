@@ -32,9 +32,11 @@ public class ProductInOrder {
     @JsonIgnore
     private OrderMain orderMain;
 
-
     @NotEmpty
     private String productId;
+
+    @NotEmpty
+    private String productCode;
 
     /**
      * 名字.
@@ -77,6 +79,7 @@ public class ProductInOrder {
 
     public ProductInOrder(ProductInfo productInfo, Integer quantity) {
         this.productId = productInfo.getProductId();
+        this.productCode = productInfo.getProductCode();
         this.productName = productInfo.getProductName();
         this.productDescription = productInfo.getProductDescription();
         this.productIcon = productInfo.getProductIcon();
@@ -91,6 +94,7 @@ public class ProductInOrder {
         return "ProductInOrder{" +
                 "id=" + id +
                 ", productId='" + productId + '\'' +
+                ", productCode='" + productCode + '\'' +
                 ", productName='" + productName + '\'' +
                 ", productDescription='" + productDescription + '\'' +
                 ", productIcon='" + productIcon + '\'' +
@@ -109,6 +113,7 @@ public class ProductInOrder {
         ProductInOrder that = (ProductInOrder) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(productId, that.productId) &&
+                Objects.equals(productCode, that.productCode) &&
                 Objects.equals(productName, that.productName) &&
                 Objects.equals(productDescription, that.productDescription) &&
                 Objects.equals(productIcon, that.productIcon) &&
@@ -119,6 +124,6 @@ public class ProductInOrder {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, productId, productName, productDescription, productIcon, categoryType, productPrice);
+        return Objects.hash(super.hashCode(), id, productId, productCode, productName, productDescription, productIcon, categoryType, productPrice);
     }
 }

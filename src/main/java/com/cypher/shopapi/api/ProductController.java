@@ -1,8 +1,10 @@
 package com.cypher.shopapi.api;
 
 import com.cypher.shopapi.entity.ProductInfo;
+import com.cypher.shopapi.entity.User;
 import com.cypher.shopapi.service.CategoryService;
 import com.cypher.shopapi.service.ProductService;
+import com.cypher.shopapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,8 @@ public class ProductController {
     CategoryService categoryService;
     @Autowired
     ProductService productService;
+    @Autowired
+    UserService userService;
 
     /**
      * Show All Categories
@@ -59,7 +63,7 @@ public class ProductController {
 
     @PostMapping("/seller/product/new")
     public ResponseEntity create(@Valid @RequestBody ProductInfo product,
-                                 BindingResult bindingResult) {
+                                 BindingResult bindingResult, Authentication authentication) {
         ProductInfo productIdExists = productService.findOne(product.getProductId());
         if (productIdExists != null) {
             bindingResult
@@ -69,6 +73,8 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult);
         }
+
+        product.setSeller(userService.findOne(authentication.getName()));
         return ResponseEntity.ok(productService.save(product));
     }
 

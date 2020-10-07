@@ -21,9 +21,14 @@ import java.util.Date;
 @Data
 @DynamicUpdate
 public class ProductInfo implements Serializable {
+
+
     @Id
     @Column(length = 120)
     private String productId;
+
+    @Column(length = 120)
+    private String productCode;
 
     @NotNull
     private String productName;
